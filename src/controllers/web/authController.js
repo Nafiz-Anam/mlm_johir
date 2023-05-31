@@ -126,6 +126,8 @@ exports.getAccessToken = async (req, res) => {
 
         const validPassword = await bcrypt.compare(password, user.password);
 
+        console.log(validPassword);
+
         const moduleStatus = await modStatus.getModuleStatus(prefix);
 
         if (moduleStatus.captcha_status) {
