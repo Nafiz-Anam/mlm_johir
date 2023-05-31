@@ -25,35 +25,6 @@ import order from "./order";
 import usdtWallet from "./usdtWallet";
 import bebWallet from "./bebWallet";
 
-// export default {
-//   signup,
-//   report,
-//   packages,
-//   epin,
-//   ewallet,
-//   home,
-//   payout,
-//   common,
-//   authAccess,
-//   profile,
-//   tools,
-//   tree,
-//   mail,
-//   payment,
-//   upgrade,
-//   crm,
-//   lcp,
-//   replica,
-//   payment,
-//   ticket,
-//   donation,
-//   replicaRegister,
-//   party,
-//   order,
-//   usdtWallet,
-//   bebWallet,
-// };
-
 export default (app) => {
   app.use("/api/web/payout", auth, payout);
   app.use("/api/web/common", common);

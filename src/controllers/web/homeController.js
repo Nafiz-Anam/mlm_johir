@@ -47,7 +47,6 @@ exports.getAppLayout = async (req, res) => {
             Languages,
             Currencies;
         const ModuleStatus = await Status.findOne({ prefix });
-        await Sequelize.close();
 
         if (ModuleStatus["lang_status"]) {
             Languages = await Lang.getAllLanguage(prefix);
@@ -60,14 +59,13 @@ exports.getAppLayout = async (req, res) => {
             where: { id },
             prefix,
         });
-        await Sequelize.close();
+
         const userDetails = await UserDetails.findOne({
             where: {
                 id,
             },
             prefix,
         });
-        await Sequelize.close();
 
         const menu = await Menus.findAll({
             attributes: ["id", "title", "slug", "user_icon", "order"],
@@ -105,7 +103,7 @@ exports.getAppLayout = async (req, res) => {
             ],
             prefix,
         });
-        await Sequelize.close();
+
         console.log(
             `************************************ menu ***********************************`
         );
@@ -397,7 +395,7 @@ exports.getAppLayout = async (req, res) => {
             }
         }
         const companyDetailsResult = await CompanyDetails.findOne({ prefix });
-        await Sequelize.close();
+
         let defaultLanguage;
         if (ModuleStatus.lang_status) {
             if (userLangDetails.default_lang) {
@@ -413,7 +411,7 @@ exports.getAppLayout = async (req, res) => {
                 defaultLanguage = Languages.find((o) => o.default === true);
             }
         }
-        await Sequelize.close();
+
         const company_info = {
             id: companyDetailsResult.id,
             company_name: companyDetailsResult.name,
@@ -463,7 +461,7 @@ exports.getAppLayout = async (req, res) => {
             var profilePic = userDetails.image;
         }
         const { width_ceiling } = await Configuration.findOne({ prefix });
-        await Sequelize.close();
+
         const data = {
             lang_status: ModuleStatus.lang_status ? true : false,
             languages: Languages,
@@ -530,7 +528,7 @@ exports.getDashboard = async (req, res) => {
             break;
     }
     const moduleStatus = await Status.findOne({ prefix });
-    await Sequelize.close();
+
     if (moduleStatus.rank_status) {
         var rnkConfig = await rankConfig.findAll({ prefix });
         var rankConfiguration = rnkConfig.reduce(
@@ -542,7 +540,7 @@ exports.getDashboard = async (req, res) => {
         );
     }
     const dashboardItems = await userDashItems.findAll({ prefix });
-    await Sequelize.close();
+
     let dashboard = dashboardItems.reduce(
         (obj, item) => ({
             ...obj,
@@ -650,7 +648,7 @@ exports.getDashboard = async (req, res) => {
             prefix,
         });
     }
-    await Sequelize.close();
+
     const userDetails = await User.findOne({
         where: {
             id: user_id,
@@ -681,7 +679,7 @@ exports.getDashboard = async (req, res) => {
         },
         prefix,
     });
-    await Sequelize.close();
+
     // profile
     const oldImageUrl = join(
         __dirname,
@@ -1100,7 +1098,7 @@ exports.getDashboard = async (req, res) => {
         }
         datas["joining_graph_data_new"] = joiningGraphData;
     }
-    await Sequelize.close();
+
     let response = await successMessage({ value: datas });
     return res.json(response);
 };
@@ -1260,7 +1258,7 @@ exports.getDashboard1 = async (req, res) => {
             prefix,
         });
     }
-    await Sequelize.close();
+
     const userDetails = await User.findOne({
         where: {
             id: user_id,
@@ -1277,7 +1275,7 @@ exports.getDashboard1 = async (req, res) => {
         ],
         prefix,
     });
-    await Sequelize.close();
+
     const placementDetails = await User.findOne({
         attributes: ["username"],
         include: [
@@ -1292,7 +1290,7 @@ exports.getDashboard1 = async (req, res) => {
         },
         prefix,
     });
-    await Sequelize.close();
+
     // profile
     const oldImageUrl = join(
         __dirname,
@@ -1698,7 +1696,6 @@ exports.getDashboard1 = async (req, res) => {
     });
     datas["commission_alert"] = commissionAlert;
 
-    await Sequelize.close();
     let response = await successMessage({ value: datas });
     return res.json(response);
 };
@@ -1824,7 +1821,7 @@ exports.getDashboardSection2 = async (req, res) => {
             }
             datas["joining_graph_data_new"] = joiningGraphData;
         }
-        await Sequelize.close();
+
         let response = await successMessage({ value: datas });
         return res.json(response);
     } catch (error) {
@@ -1983,7 +1980,7 @@ exports.getDashboardSection3 = async (req, res) => {
                 }
             }
         }
-        await Sequelize.close();
+
         let response = await successMessage({ value: datas });
         return res.json(response);
     } catch (error) {
@@ -2071,7 +2068,7 @@ exports.getTileFilter = async (req, res) => {
         tilesArr = tiles;
     }
     let response = await successMessage({ value: tilesArr });
-    await Sequelize.close();
+
     return res.json(response);
 };
 
@@ -2201,7 +2198,6 @@ exports.getNotifications = async (req, res) => {
             }
         }
 
-        await Sequelize.close();
         return res.json({
             status: true,
             data: {
@@ -2241,7 +2237,7 @@ exports.setDefaultCurrency = async (req, res) => {
             },
             prefix,
         });
-        await Sequelize.close();
+
         const { currency } = req.body;
         await userDetails.update({ default_currency: currency }, {}, prefix);
         return res.json({ status: true, data: "" });
@@ -2264,7 +2260,7 @@ exports.setDefaultLanguage = async (req, res) => {
             },
             prefix,
         });
-        await Sequelize.close();
+
         const { lang_id } = req.body;
         await userDetails.update({ default_lang: lang_id }, {}, prefix);
         return res.json({
@@ -2331,7 +2327,7 @@ exports.validateString = async (req, res) => {
             },
             prefix,
         });
-        await Sequelize.close();
+
         if (!userDetails) {
             return res.status(401).json({ status: false });
         }
@@ -2369,7 +2365,7 @@ exports.validateString = async (req, res) => {
                 { prefix }
             );
         }
-        await Sequelize.close();
+
         let updateString = await common.updateCheckString(string, prefix);
         if (!updateString) {
             return res.status(401).json({ status: false });

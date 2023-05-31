@@ -55,7 +55,6 @@ exports.getAccessToken = async (req, res) => {
             });
         }
         if (!username || !password) {
-            await Sequelize.close();
             let response = await errorMessage({ code: 1003 });
             return res.json(response);
         }
@@ -71,14 +70,13 @@ exports.getAccessToken = async (req, res) => {
             },
             prefix,
         });
-        await Sequelize.close();
 
         if (!user) {
             let unapproveStatus = await SignupSettings.findOne({
                 attributes: ["login_unapproved"],
                 prefix,
             });
-            await Sequelize.close();
+
             if (unapproveStatus.login_unapproved) {
                 let checkUser = await common.checkUnapprovedUser(
                     username,
@@ -105,7 +103,7 @@ exports.getAccessToken = async (req, res) => {
                         {},
                         prefix
                     );
-                    await Sequelize.close();
+
                     return res.json({
                         status: true,
                         data: {
@@ -250,7 +248,7 @@ exports.logOutAPI = async (req, res) => {
             {},
             prefix
         );
-        await Sequelize.close();
+
         return res.json({ status: true, data: [] });
     } catch (error) {
         return res.status(401).json({ status: false });
@@ -286,7 +284,7 @@ exports.validateString = async (req, res) => {
             },
             prefix,
         });
-        await Sequelize.close();
+
         if (!userDetails) {
             return res.status(401).json({ status: false });
         }
@@ -306,7 +304,7 @@ exports.validateString = async (req, res) => {
             },
             prefix,
         });
-        await Sequelize.close();
+
         if (availableToken != null) {
             await availableToken.update(
                 {
@@ -326,7 +324,7 @@ exports.validateString = async (req, res) => {
             );
         }
         let updateString = await common.updateCheckString(string, prefix);
-        await Sequelize.close();
+
         if (!updateString) {
             return res.status(401).json({ status: false });
         }
@@ -366,7 +364,7 @@ exports.getVerifyQRCode = async (req, res) => {
                     ],
                 },
             });
-            await Sequelize.close();
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -388,7 +386,7 @@ exports.getVerifyQRCode = async (req, res) => {
                 },
                 prefix,
             });
-            await Sequelize.close();
+
             await user.update(
                 {
                     goc_key: auth_key,
@@ -396,7 +394,7 @@ exports.getVerifyQRCode = async (req, res) => {
                 {},
                 prefix
             );
-            await Sequelize.close();
+
             var accessToken = jwt.sign(
                 {
                     username: user.username,
@@ -415,7 +413,7 @@ exports.getVerifyQRCode = async (req, res) => {
                 },
                 prefix,
             });
-            await Sequelize.close();
+
             if (availableToken != null) {
                 await availableToken.update(
                     {
@@ -434,7 +432,7 @@ exports.getVerifyQRCode = async (req, res) => {
                     { prefix }
                 );
             }
-            await Sequelize.close();
+
             let data = {
                 status: verified,
                 access_token: accessToken ? accessToken : "",
@@ -644,7 +642,7 @@ exports.validEmail = async (req, res) => {
                     ],
                 },
             });
-            await Sequelize.close();
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -662,7 +660,6 @@ exports.validEmail = async (req, res) => {
             },
             prefix,
         });
-        await Sequelize.close();
 
         if (
             e_mail.trim().toLowerCase() == userEmail?.email.trim().toLowerCase()
@@ -701,7 +698,7 @@ exports.validForgetKey = async (req, res) => {
                     ],
                 },
             });
-            await Sequelize.close();
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -766,7 +763,7 @@ exports.resetPassword = async (req, res) => {
                     ],
                 },
             });
-            await Sequelize.close();
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -791,7 +788,7 @@ exports.resetPassword = async (req, res) => {
                 {},
                 prefix
             );
-            await Sequelize.close();
+
             let response = await successMessage({
                 message: "Password reset successfully",
             });
@@ -830,7 +827,7 @@ exports.validTransForgetKey = async (req, res) => {
                     ],
                 },
             });
-            await Sequelize.close();
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -844,7 +841,7 @@ exports.validTransForgetKey = async (req, res) => {
                 },
                 prefix,
             });
-            await Sequelize.close();
+
             if (!Token) {
                 let response = await errorMessage({ code: 1076 });
                 return res.status(422).json(response);
@@ -894,7 +891,7 @@ exports.resetTransPassword = async (req, res) => {
                     ],
                 },
             });
-            await Sequelize.close();
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -919,7 +916,6 @@ exports.resetTransPassword = async (req, res) => {
                 {},
                 prefix
             );
-            await Sequelize.close();
 
             let response = await successMessage({
                 message: "Transaction Password reset successfully",
@@ -960,7 +956,7 @@ exports.validateTreeString = async (req, res) => {
                     ],
                 },
             });
-            await Sequelize.close();
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -983,7 +979,7 @@ exports.validateTreeString = async (req, res) => {
             },
             prefix,
         });
-        await Sequelize.close();
+
         if (!userDetails) {
             return res.status(401).json({ status: false });
         }
@@ -1085,7 +1081,7 @@ exports.emailVerification = async (req, res) => {
             {},
             prefix
         );
-        await Sequelize.close();
+
         let response = await successMessage({
             message: "Email Verification Completed Successfully",
         });
@@ -1120,7 +1116,7 @@ exports.getPaymentGatewayKey = async (req, res) => {
                     ],
                 },
             });
-            await Sequelize.close();
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -1143,7 +1139,7 @@ exports.getPaymentGatewayKey = async (req, res) => {
                 },
                 prefix,
             });
-            await Sequelize.close();
+
             let data = {
                 public_key: Key.public_key,
             };
