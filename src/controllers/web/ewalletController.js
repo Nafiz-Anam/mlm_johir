@@ -1145,7 +1145,7 @@ exports.getEarningExportData = async (req, res) => {
 
 exports.getUserEarningsTable = async (req, res) => {
     try {
-      // table prefix
+        // table prefix
         const prefix = req.headers["api-key"];
         if (!prefix) {
             let response = await errorMessage({ code: 1001 });
@@ -1164,7 +1164,15 @@ exports.getUserEarningsTable = async (req, res) => {
         var { start_date, end_date, length, start, order, direction } =
             req.query;
 
-        console.log("query params =>",start_date, end_date, length, start, order, direction);
+        console.log(
+            "query params =>",
+            start_date,
+            end_date,
+            length,
+            start,
+            order,
+            direction
+        );
 
         let filters = {
             order: order ? order.split(",") : "",
@@ -1415,6 +1423,8 @@ exports.fundTransfer = async (req, res) => {
         }
         const userId = req.user.id;
         let { to_user_name, pswd, transaction_note, amount } = req.body;
+        console.log(to_user_name, pswd, transaction_note, amount);
+
         if (to_user_name == req.user.username) {
             let response = await errorMessage({ code: 1072 });
             return res.status(422).json(response);
@@ -1840,7 +1850,7 @@ async function userEarnings(
     let [whereStatement, list, enableBonus] = [[], [], []];
     let bonusList = await getEnabledBonusList(prefix);
     Object.entries(bonusList).map(([key, value]) => {
-      console.log("value =>", value);
+        console.log("value =>", value);
         enableBonus.push(value);
         // enableBonus.push(value.replaceAll(" ", "_"));
     });
