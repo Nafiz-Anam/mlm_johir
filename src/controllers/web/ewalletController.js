@@ -1276,7 +1276,7 @@ exports.getUserEarningsTable = async (req, res) => {
             value: data,
         });
         res.json(response);
-    } catch (err) {
+    } catch (error) {
         console.log("error =>", error);
         return res.status(500).json(err.message);
     }
