@@ -4,13 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2 start --no-daemon src/index.js --exp-backoff-restart-delay=100",
-    "startup": "pm2 startup",
-    "status": "pm2 status",
-    "stop": "pm2 stop index",
     "dev": "nodemon src/index.js ",
-    "nodemon": "nodemon src/index.js"
+    "start": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",
