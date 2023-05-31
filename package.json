@@ -1,0 +1,49 @@
+{
+  "name": "nodejs_sequelize",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "pm2 start --no-daemon src/index.js --exp-backoff-restart-delay=100",
+    "startup": "pm2 startup",
+    "status": "pm2 status",
+    "stop": "pm2 stop index",
+    "dev": "nodemon src/index.js ",
+    "nodemon": "nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supercharge/strings": "^1.27.0",
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "form-data": "^4.0.0",
+    "helmet": "^5.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "mysql2": "^2.3.3",
+    "node-datetime": "^2.1.2",
+    "node-jsencrypt": "^1.0.0",
+    "nodemailer": "^6.9.1",
+    "nodemailer-express-handlebars": "^5.0.0",
+    "nodemon": "^2.0.15",
+    "pm2": "^5.2.0",
+    "sequelize": "^5.22.5",
+    "speakeasy": "^2.0.0",
+    "stripe": "^9.12.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.0"
+  }
+}
