@@ -17,7 +17,7 @@ module.exports = {
                 },
                 retry: {
                     match: [/Deadlock/i],
-                    max: 5, // Maximum rety 3 times
+                    max: 3, // Maximum rety 3 times
                     backoffBase: 1000, // Initial backoff duration in ms. Default: 100,
                     backoffExponent: 1.1, // Exponent to increase backoff each try. Default: 1.1
                 },
@@ -42,13 +42,13 @@ module.exports = {
                 },
                 retry: {
                     match: [/Deadlock/i],
-                    max: 5, // Maximum rety 3 times
+                    max: 3, // Maximum rety 3 times
                     backoffBase: 1000, // Initial backoff duration in ms. Default: 100,
                     backoffExponent: 1.1, // Exponent to increase backoff each try. Default: 1.1
                 },
-                // timezone: "-5:30",
+                timezone: "-5:30",
             },
         },
     },
-    DB_PREFIX: "1055_",
+    DB_PREFIX: "14963_",
 };
