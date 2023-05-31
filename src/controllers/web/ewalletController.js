@@ -1840,7 +1840,9 @@ async function userEarnings(
     let [whereStatement, list, enableBonus] = [[], [], []];
     let bonusList = await getEnabledBonusList(prefix);
     Object.entries(bonusList).map(([key, value]) => {
-        enableBonus.push(value.replaceAll(" ", "_"));
+      console.log("value =>", value);
+        enableBonus.push(value);
+        // enableBonus.push(value.replaceAll(" ", "_"));
     });
     if (user_id) {
         let condition1 = {
