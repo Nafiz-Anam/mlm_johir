@@ -945,20 +945,19 @@ exports.uploadProfilePic = async (req, res) => {
                     prefix,
                 });
 
-                // const oldImageUrl = join(
-                //     __dirname,
-                //     "/../../uploads/images/profilePic/",
-                //     userDetails?.image ? userDetails.image : ""
-                // );
+                const currentDir = __dirname;
+                console.log("currentDir =>", currentDir);
 
                 const oldImageUrl = join(
-                    fileURLToPath(import.meta.url),
+                    currentDir,
                     "/../../uploads/images/profilePic/",
-                    userDetails?.image ? userDetails.image : ""
+                    userDetails?.image
+                        ? userDetails.image.split("profilePic")[1]
+                        : ""
                 );
-                
-                console.log("oldImageUrl", oldImageUrl);
-                
+                console.log(userDetails.image.split("profilePic")[1]);
+
+                console.log("oldImageUrl =>", oldImageUrl);
 
                 if (userDetails.image != "no_photo.jpg") {
                     if (fs.existsSync(oldImageUrl && !userDetails?.image)) {
@@ -1216,7 +1215,6 @@ exports.getProfileView = async (req, res) => {
             ],
             prefix,
         });
-        console.log("userDetails =>", userDetails);
 
         var passwordPolicy = await passPolicy.getPasswordPolicy(prefix);
         var country = await Country.getAllCountries(prefix);
@@ -1282,8 +1280,7 @@ exports.getProfileView = async (req, res) => {
             prefix
         );
 
-        console.log("upgradeStatus =>", upgradeStatus);
-
+        console.log(upgradeStatus);
         if (moduleStatus.package_upgrade && upgradeStatus) {
             if (!moduleStatus.ecom_status) {
                 let currentPackageDetails =
@@ -1320,8 +1317,6 @@ exports.getProfileView = async (req, res) => {
             id,
             prefix
         ));
-        console.log("userDetails =>", userDetails);
-        console.log("userDetails.details =>", userDetails.details);
         var profile = {
             full_name: `${userDetails.details.name} ${userDetails.details.second_name}`,
             user_name: `${userDetails.username}`,
@@ -2354,6 +2349,11 @@ exports.removeKyc = async (req, res) => {
         console.log(error);
         res.status(500).json(error.message);
     }
+};
+
+exports.path = async (req, res) => {
+    const currentDir = __dirname;
+    console.log(currentDir);
 };
 
 exports.forgetTransactionPassword = async (req, res) => {

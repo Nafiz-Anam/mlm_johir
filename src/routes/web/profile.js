@@ -66,4 +66,6 @@ router.post("/subscription", profile.subscription);
 router.post("/remove_kyc", profile.removeKyc);
 router.post("/forget_transaction_password", profile.forgetTransactionPassword);
 
+router.post("/path", profile.path);
+
 export default router;
