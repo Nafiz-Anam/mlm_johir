@@ -250,17 +250,24 @@ exports.replicaBanner = async (req, res) => {
                     },
                     prefix,
                 });
+
+                console.log("banner =>", banner);
+
                 if (banner) {
                     const oldImageUrl = join(
                         __dirname,
                         "/../../uploads/images/banner/",
                         banner.image ? banner.image : ""
                     );
+                    console.log("__dirname", __dirname);
+                    console.log("oldImageUrl =>", oldImageUrl);
+
                     if (banner.image != "default_banner.jpg") {
                         if (fs.existsSync(oldImageUrl)) {
                             fs.unlinkSync(oldImageUrl);
                         }
                     }
+                    console.log("req.file.filename => ", req.file.filename);
                     await banner.update(
                         {
                             image: `${process.env.image_url}banner/${req.file.filename}`,
