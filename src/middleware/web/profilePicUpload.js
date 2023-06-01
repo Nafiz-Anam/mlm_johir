@@ -10,7 +10,7 @@ const fileUploadDirectory = path.join(
   "/uploads/images/profilePic"
 );
 
-console.log("fileUploadDirectory", fileUploadDirectory);
+// console.log("fileUploadDirectory", fileUploadDirectory);
 
 let storage = multer.diskStorage({
   destination: (req, image, cb) => {

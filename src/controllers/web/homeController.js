@@ -59,13 +59,15 @@ exports.getAppLayout = async (req, res) => {
             where: { id },
             prefix,
         });
+        // console.log("userLangDetails =>", userLangDetails);
 
         const userDetails = await UserDetails.findOne({
             where: {
-                id,
+                user_id: id,
             },
             prefix,
         });
+        // console.log("userDetails => ", userDetails);
 
         const menu = await Menus.findAll({
             attributes: ["id", "title", "slug", "user_icon", "order"],
