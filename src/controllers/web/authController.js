@@ -3,6 +3,7 @@ const speakeasy = require("speakeasy");
 const jwt = require("jsonwebtoken");
 const db = require("../../models");
 const { Op } = require("sequelize");
+const { Sequelize } = require("sequelize");
 const { errorMessage, successMessage } = require("../../utils/web/response");
 const { mailConfig, sendMail } = require("../../utils/web/nodeMailer");
 const modStatus = require("../../utils/web/moduleStatus");
@@ -75,6 +76,7 @@ exports.getAccessToken = async (req, res) => {
                 attributes: ["login_unapproved"],
                 prefix,
             });
+
             if (unapproveStatus.login_unapproved) {
                 let checkUser = await common.checkUnapprovedUser(
                     username,
@@ -101,6 +103,7 @@ exports.getAccessToken = async (req, res) => {
                         {},
                         prefix
                     );
+
                     return res.json({
                         status: true,
                         data: {
@@ -243,6 +246,7 @@ exports.logOutAPI = async (req, res) => {
             {},
             prefix
         );
+
         return res.json({ status: true, data: [] });
     } catch (error) {
         return res.status(401).json({ status: false });
@@ -278,6 +282,7 @@ exports.validateString = async (req, res) => {
             },
             prefix,
         });
+
         if (!userDetails) {
             return res.status(401).json({ status: false });
         }
@@ -297,6 +302,7 @@ exports.validateString = async (req, res) => {
             },
             prefix,
         });
+
         if (availableToken != null) {
             await availableToken.update(
                 {
@@ -316,6 +322,7 @@ exports.validateString = async (req, res) => {
             );
         }
         let updateString = await common.updateCheckString(string, prefix);
+
         if (!updateString) {
             return res.status(401).json({ status: false });
         }
@@ -355,6 +362,7 @@ exports.getVerifyQRCode = async (req, res) => {
                     ],
                 },
             });
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -376,6 +384,7 @@ exports.getVerifyQRCode = async (req, res) => {
                 },
                 prefix,
             });
+
             await user.update(
                 {
                     goc_key: auth_key,
@@ -383,6 +392,7 @@ exports.getVerifyQRCode = async (req, res) => {
                 {},
                 prefix
             );
+
             var accessToken = jwt.sign(
                 {
                     username: user.username,
@@ -401,6 +411,7 @@ exports.getVerifyQRCode = async (req, res) => {
                 },
                 prefix,
             });
+
             if (availableToken != null) {
                 await availableToken.update(
                     {
@@ -419,6 +430,7 @@ exports.getVerifyQRCode = async (req, res) => {
                     { prefix }
                 );
             }
+
             let data = {
                 status: verified,
                 access_token: accessToken ? accessToken : "",
@@ -628,6 +640,7 @@ exports.validEmail = async (req, res) => {
                     ],
                 },
             });
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -683,13 +696,14 @@ exports.validForgetKey = async (req, res) => {
                     ],
                 },
             });
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
         }
         const { resetkey } = req.query;
         console.log(resetkey);
-        
+
         if (resetkey) {
             const Token = await ResetPass.findOne({
                 where: {
@@ -747,6 +761,7 @@ exports.resetPassword = async (req, res) => {
                     ],
                 },
             });
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -810,6 +825,7 @@ exports.validTransForgetKey = async (req, res) => {
                     ],
                 },
             });
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -823,6 +839,7 @@ exports.validTransForgetKey = async (req, res) => {
                 },
                 prefix,
             });
+
             if (!Token) {
                 let response = await errorMessage({ code: 1076 });
                 return res.status(422).json(response);
@@ -872,6 +889,7 @@ exports.resetTransPassword = async (req, res) => {
                     ],
                 },
             });
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -936,6 +954,7 @@ exports.validateTreeString = async (req, res) => {
                     ],
                 },
             });
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -958,6 +977,7 @@ exports.validateTreeString = async (req, res) => {
             },
             prefix,
         });
+
         if (!userDetails) {
             return res.status(401).json({ status: false });
         }
@@ -1059,6 +1079,7 @@ exports.emailVerification = async (req, res) => {
             {},
             prefix
         );
+
         let response = await successMessage({
             message: "Email Verification Completed Successfully",
         });
@@ -1093,6 +1114,7 @@ exports.getPaymentGatewayKey = async (req, res) => {
                     ],
                 },
             });
+
             var prefix = `${mlmDetails.prefix}_`;
         } else {
             var prefix = process.env.PREFIX;
@@ -1115,6 +1137,7 @@ exports.getPaymentGatewayKey = async (req, res) => {
                 },
                 prefix,
             });
+
             let data = {
                 public_key: Key.public_key,
             };
