@@ -2085,12 +2085,14 @@ exports.getGraphFilter = async (req, res) => {
         return res.json(response);
     }
     let moduleStatus = await modStatus.getModuleStatus(prefix);
+    console.log("moduleStatus =>", moduleStatus);
     let graphData = await HomeService.getJoiningLineChartData(
         user_id,
         range,
         moduleStatus,
         prefix
     );
+    console.log("graphData =>", graphData);
     if (moduleStatus.mlm_plan == "Binary") {
         Object.entries(graphData.labels).map(([key, value]) => {
             chartsData[key] = [
@@ -2284,11 +2286,13 @@ exports.goToStore = async (req, res) => {
             return res.json(response);
         }
         const ModuleStatus = await modStatus.getModuleStatus(prefix);
+        // console.log("ModuleStatus", ModuleStatus.dataValues);
         if (!ModuleStatus.ecom_status) {
             return res.status(401).json({ status: false });
         }
         const { id } = req.user;
         const url = await common.createEcomLink(id, title, prefix);
+        // console.log("url =>", url);
         if (url == "") {
             return res.status(401).json({ status: false });
         }
@@ -2299,8 +2303,8 @@ exports.goToStore = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error);
-        return res.status(401).json({ status: false });
+        // console.log("error", error);
+        return res.status(401).json({ status: false, message: "Error occurred"});
     }
 };
 

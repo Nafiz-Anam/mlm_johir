@@ -7,9 +7,6 @@ router.get("/logout", authAccess.logOutAPI);
 router.post("/password_forget", authAccess.forgetPassword);
 router.get("/reset_password", authAccess.validForgetKey);
 router.post("/password_reset", authAccess.resetPassword);
-
-
-
 router.get("/validateString", authAccess.validateString);
 router.post("/verifyOtp", authAccess.getVerifyQRCode);
 router.post("/reset_otp", authAccess.resetGoogleOtp);
@@ -20,7 +17,6 @@ router.post("/tran_password_reset", authAccess.resetTransPassword);
 router.get("/validateTreeString", authAccess.validateTreeString);
 router.get("/validateEmail", authAccess.emailVerification);
 router.post("/create-payment-intent", authAccess.getPaymentGatewayKey);
-
 
 // checking
 router.post("/pass_enc", authAccess.enc);

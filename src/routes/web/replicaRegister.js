@@ -13,7 +13,6 @@ router.post(
   "/upload_payment_reciept",
   ReplicaRegister.uploadBankPaymentReceipt
 );
-router.get("/accound_details", ReplicaRegister.getBankAccountDetails);
 router.get("/countryChange", ReplicaRegister.changeCountry);
 
 export default router;

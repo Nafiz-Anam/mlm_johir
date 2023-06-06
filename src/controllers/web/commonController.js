@@ -92,7 +92,7 @@ exports.checkToken = async (req, res) => {
             return res.json(response);
         }
         const decoded = jwt.verify(token, process.env.TOKEN_KEY);
-        console.log("==================Decoded=====================", decoded);
+        // console.log("==================Decoded=====================", decoded);
         if (decoded.user_type == "user") {
             const accessTokenFromDB = await Common.getAccessToken(
                 decoded.id,
@@ -397,6 +397,7 @@ exports.uploadReceipt = async (req, res) => {
         }
         await uploadFile(req, res, async function (err) {
             if (err != undefined) {
+                console.log(err);
                 if (err instanceof multer.MulterError) {
                     if (err.code == "LIMIT_FILE_SIZE") {
                         let response = await errorMessage({ code: 1018 });

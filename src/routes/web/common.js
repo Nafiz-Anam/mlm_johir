@@ -17,7 +17,7 @@ router.post(
     validate,
     Common.addNewDemoVisitor
 );
-router.post("/verifyotp");
+// router.post("/verifyotp");
 router.get(
     "/unapprovedDashboard",
     authUnapprove,

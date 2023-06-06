@@ -1129,6 +1129,7 @@ exports.getPaymentGatewayKey = async (req, res) => {
             },
             prefix,
         });
+
         if (gateway) {
             let Key = await paymentConfigDetails.findOne({
                 attributes: ["public_key"],
