@@ -23,8 +23,8 @@ router.post(
   payments.checkPurchaseWalletBalance
 );
 
-router.get("/payment_methods", payments.getPaymentMethod);
-router.post("/upload_payment_reciept", payments.uploadBankPaymentReceipt);
+// router.get("/payment_methods", payments.getPaymentMethod);
+// router.post("/upload_payment_reciept", payments.uploadBankPaymentReceipt);
 
 
 export default router;

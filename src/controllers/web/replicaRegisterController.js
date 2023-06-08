@@ -578,6 +578,7 @@ exports.checkUsername = async (req, res) => {
             let response = await errorMessage({ code: 1010 });
             return res.status(500).json(response);
         }
+        console.log(username);
         username = username.trim().toLowerCase();
         let result = await User.findAll({
             where: {
@@ -2363,7 +2364,7 @@ exports.uploadBankPaymentReceipt = async (req, res) => {
                 if (req.user) {
                     var { id } = req.user;
                 } else {
-                    var id = await Common.usernameToId(
+                    var id = await common.usernameToId(
                         req.body.user_name,
                         prefix
                     );

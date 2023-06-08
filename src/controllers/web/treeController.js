@@ -31,9 +31,9 @@ exports.getGenealogyTree = async (req, res) => {
         let rankStatus = moduleStatus.rank_status;
         let mlmPlan = moduleStatus.mlm_plan;
 
-        console.log(
-            "888888888888888888888888888888888888888888888888888888888888888"
-        );
+        // console.log(
+        //     "888888888888888888888888888888888888888888888888888888888888888"
+        // );
         if (user_name != "") {
             userId = await common.usernameToId(user_name, prefix);
             let downlineCheck = await common.checkDownline(
@@ -476,7 +476,7 @@ async function reactTree(mlmPlan, rankStatus, userId, treeType, prefix) {
                 attributes: ["id"],
                 where: {
                     position: checkPos,
-                    father_id: userId,
+                    father_id: userId, 
                 },
                 prefix,
             });

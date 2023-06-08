@@ -4,7 +4,7 @@ const path = require("path");
 const maxSize = 2 * 1024 * 1024;
 const fs = require("fs");
 
-const fileUploadDirectory = path.join(__dirname, "..", "/uploads/images/party");
+const fileUploadDirectory = path.join(__dirname, "../../uploads/images/party");
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
