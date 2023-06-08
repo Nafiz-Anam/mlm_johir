@@ -22,6 +22,11 @@ const pinTransHistory = db.pinTransHistory;
 exports.getSearchEpin = async (req, res) => {
     const id = 2;
     var data = [];
+    const prefix = req.headers["api-key"];
+    if (!prefix) {
+        let response = await errorMessage({ code: 1001 });
+        return res.json(response);
+    }
     const { term } = req.query;
     try {
         const pin = await pinNum.findAll({
@@ -35,6 +40,7 @@ exports.getSearchEpin = async (req, res) => {
                 },
             },
             order: ["id"],
+            prefix,
         });
         Object.entries(pin).map(([key, value]) => {
             data[key] = {
